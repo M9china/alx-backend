@@ -3,7 +3,9 @@ import csv
 import math
 from typing import List
 
-"""Module conatains an index_range funtion"""
+"""
+Module conatains an index_range funtion
+"""
 
 
 def index_range(page: int, page_size: int) -> tuple:
