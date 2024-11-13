@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
+"""
+Module conatains an index_range funtion"""
+
+
 import csv
 from typing import List
-
-"""Module conatains an index_range funtion"""
 
 
 def index_range(page: int, page_size: int) -> tuple:
     """Functon calculates starting index and end inde of page
-
-    Args:
-        page (int): The page number
-        page_size (int): The size of the page
-
-    Returns:
-        (tuple): Returns a tuple containing the start and end index of
-        the page
     """
     start_index = (page - 1) * page_size
     end_index = page_size + start_index
@@ -42,13 +36,6 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Returns the Page
-
-        Args:
-            page (int): The page to be showed
-            page_size (int): Size of the page
-
-        Returns:
-            Returns the page as a list
         """
         self.__dataset = self.dataset()
         assert isinstance(page, int) and page > 0
