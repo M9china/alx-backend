@@ -9,7 +9,6 @@ from typing import List, Dict, Any
 import math
 
 
-
 def index_range(page: int, page_size: int) -> tuple:
     """Functon calculates the starting index and end inde of page
     """
