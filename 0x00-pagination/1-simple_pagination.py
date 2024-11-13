@@ -3,9 +3,7 @@ import csv
 from typing import List
 
 """
-Module that contains the implementation 
-of a simple pagination system
-
+Module conatains an index_range funtion
 """
 
 
