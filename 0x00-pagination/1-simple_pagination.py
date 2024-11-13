@@ -2,13 +2,11 @@
 import csv
 from typing import List
 
-"""
-Module conatains an index_range funtion
-"""
+"""Module conatains an index_range funtion"""
 
 
 def index_range(page: int, page_size: int) -> tuple:
-    """Functon calculates the starting index and end inde of page
+    """Functon calculates starting index and end inde of page
 
     Args:
         page (int): The page number
