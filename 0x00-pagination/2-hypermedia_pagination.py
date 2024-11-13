@@ -45,21 +45,35 @@ class Server:
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
         """Returns hypermedia pagination data."""
+        if page_size <= 0:
+            return {
+                'page_size': page_size,
+                'page': page,
+                'data': [],
+                'next_page': None,
+                'prev_page': None,
+                'total_pages': 0,
+            }
+
         min_val, max_val = index_range(page, page_size)
         items = len(self.dataset())
         total_pages = math.ceil(items / page_size)
 
+        # Ensure that we don't request more pages than available
+        page = min(page, total_pages)
+
+        # Handle page data
         hyper_data: Dict[str, Any] = {}
         hyper_data['page_size'] = page_size
-        hyper_data['page'] = page if page <= total_pages else total_pages
+        hyper_data['page'] = page
         hyper_data['data'] = self.get_page(page, page_size)
 
-        # Handle next_page and previous_page
+        # Handle next_page and prev_page
         next_page = page + 1 if page < total_pages else None
-        previous_page = page - 1 if page > 1 else None
+        prev_page = page - 1 if page > 1 else None
 
         hyper_data['next_page'] = next_page
-        hyper_data['previous_page'] = previous_page
+        hyper_data['prev_page'] = prev_page
         hyper_data['total_pages'] = total_pages
 
         return hyper_data
