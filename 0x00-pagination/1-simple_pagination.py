@@ -3,25 +3,26 @@ import csv
 from typing import List
 
 """
-Module that contains the implementation of a simple pagination system.
-It provides an index_range function to calculate pagination indices and a
-Server class to handle fetching a paginated dataset of popular baby names.
+Module that contains the implementation 
+of a simple pagination system
+
 """
 
 
 def index_range(page: int, page_size: int) -> tuple:
-    """Function calculates the starting index and end index of a page
+    """Functon calculates the starting index and end inde of page
 
     Args:
         page (int): The page number
         page_size (int): The size of the page
 
     Returns:
-        tuple: Returns a tuple containing the start and end index of the page
+        (tuple): Returns a tuple containing the start and end index of
+        the page
     """
     start_index = (page - 1) * page_size
     end_index = page_size + start_index
-    return start_index, end_index
+    return (start_index, end_index)
 
 
 class Server:
@@ -31,41 +32,33 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """Initializes the server with an empty dataset."""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Fetches dataset of baby names, caching it after the first load."""
+        """cached dataset
+        """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
-            self.__dataset = dataset[1:]  # Skip the header
+            self.__dataset = dataset[1:]
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """Returns a page of data from the dataset.
+        """Returns the Page
 
         Args:
-            page (int): The page number to be shown.
-            page_size (int): The size of the page to show.
+            page (int): The page to be showed
+            page_size (int): Size of the page
 
         Returns:
-            List[List]: A list representing the page of results.
+            Returns the page as a list
         """
-        # Validate inputs
-        if not isinstance(page, int) or page <= 0:
-            raise ValueError("page must be a positive integer")
-        if not isinstance(page_size, int) or page_size <= 0:
-            raise ValueError("page_size must be a positive integer")
-
-        # Get the dataset
-        dataset = self.dataset()
-
-        # Get the indices for the page
-        start_idx, end_idx = index_range(page, page_size)
-
-        # Get the data for the requested page
-        page_data = dataset[start_idx:end_idx]
-
-        return page_data
+        self.__dataset = self.dataset()
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+        data = index_range(page, page_size)
+        names = self.__dataset[data[0]:data[1]]
+        if (names):
+            return names
+        return []
